@@ -10,19 +10,17 @@ name: lint-project
 
 jobs:
   lint-project:
-    runs-on: macos-11
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-
       - uses: r-lib/actions/setup-r@v1
         with:
           use-public-rspm: true
-
-      - name: Install lintr
-        run: install.packages("lintr", repo="http://cran.rstudio.com/")
-        shell: Rscript {0}
+      - uses: URMC-BST/hw-template/.github/actions/pak-project@main
+        with:
+          extra-packages: lintr
 
       - name: Lint root directory
         run: lint_assignment()
